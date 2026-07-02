@@ -17,14 +17,13 @@ router.get("/", async (req, res) => {
 //Obtener una nota por Id
 router.get("/:id", async (req, res) => {
     try {
-        const id = req.params.id;
-        const note = await Note.findById(id);
+        const note = await Note.findById(req.params.id);
         if (!note) {
             return res.status(404).json({ message: "Nota no encontrada" });
         }
-        res.status(200).json(note);
-    } catch (error) {
-        console.error("Error al obtener la nota", error);
+        res.json(note);
+    } catch (e) {
+        console.error("Error al obtener la nota", e);
         res.status(500).json({ message: "Error al obtener la nota" });
     }
 });
@@ -50,14 +49,13 @@ router.post("/", async (req, res) => {
 // Eliminar una nota
 router.delete("/:id", async (req, res) => {
     try {
-        const id = req.params.id;
-        const deletedNote = await Note.findByIdAndDelete(id);
+        const deletedNote = await Note.findByIdAndDelete(req.params.id);
         if (!deletedNote) {
             return res.status(404).json({ message: "Nota no encontrada" });
         }
-        res.status(200).json({ message: "Nota eliminada correctamente" });
-    } catch (error) {
-        console.error("Error al eliminar la nota", error);
+        res.json({ message: "Nota eliminada correctamente" });
+    } catch (e) {
+        console.error("Error al eliminar la nota", e);
         res.status(500).json({ message: "Error al eliminar la nota" });
     }
 })
